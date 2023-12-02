@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+// import Home from "./MyComponents/Home";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import MyProfile from './MyComponents/profile/MyProfile';
+// import MainPage from './MyComponents/landingPage/MainPage';
 
 function App() {
+  let st = {
+    margin: '1%'
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={st}>
+    <MyProfile/>
     </div>
   );
 }

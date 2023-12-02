@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #background {
+    position: fixed;
+    animation-name: bg;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    z-index: -1;
+  }
+  #bg1 {
+    width: 0%;
+    position: fixed;
+    z-index: -1;
+    animation-name: bg1;
+    animation-delay: 2s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes bg1 {
+    0% {
+        top: 100%;
+        left: 28%;
+        opacity: 0;
+        width: 45%;
+    }
+    100% {
+        left: 28%;
+        top: 19%;
+        opacity: 0.9;
+        width: 45%;
+    }
+  }
+  
+  @keyframes bg {
+    0% {
+        height: 26%;
+        top: 36%;
+        left: 40%;
+    }
+    100% {
+        top: -5%;
+        left: -2%;
+        height: 130%;
+    }
+  }
+  
+  #heading {
+    color: white;
+    position: fixed;
+    top: 28%;
+    left: 33%;
+    font-size: 3vw;
+  }
+
+  .login {
+    position: fixed;
+    top: 43%;
+    left: 40%;
+  }
+
+  #user, #pass {
+    width: 135%;
+    font-size: 1.1vw;
+    margin-bottom: 5%;
+    padding: 3%;
+  }
+
+  .st1 {
+    margin-top: 1%;
+    margin-right: 3%;
+    float: left;
+    width: 15%;
+  }
+
+  .itemBlock {
+    margin-top: 1%;
+    border: 1px solid black;
+    float: left;
+    width: 80%;
+  }
+
+  .itemImageLogo {
+    margin: 1%;
+    float: left;
+    width: 19.5%;
+    height: 13vw;
+  }
+
+  .itemImageLogo img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .itemDesc {
+    margin: 1%;
+    width: 65%;
+    height: 13vw;
+    float: left;
+  }
+
+  .itemButtons {
+    float: right;
+    width: 9%;
+    margin: 1%;
+    height: 13vw;
+  }
+
+  .itemButtons button {
+    width: 100%;
+    margin-top: 32%;
+  }
+
+  .detailsContent {
+    margin-top: 1%;
+    width: 100%;
+  }
+
+  .detailsContentLeft {
+    width: 35%;
+    float: left;
+    margin: 2%;
+  }
+
+  .detailsContentLeft img {
+    width: 94%;
+    height: 28vw;
+  }
+
+  .detailsContentRight {
+    width: 61%;
+    float: right;
+    margin-top: 2%;
+  }
+
+  .detailsContentRight h2 {
+    margin-bottom: 4%;
+  }
+
+  .detailsContentRight h4 {
+    margin-bottom: 2%;
+  }
+
+  .detailsContentRight #btn1 {
+    margin: 2%;
+    margin-left: 0%;
+  }
+
+  .detailsContentRight #btn2 {
+    margin: 2%;
+    margin-left: 4%;
+  }
+
+  .myProfileDetails {
+    width: 50%;
+    float: left;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
