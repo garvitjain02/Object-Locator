@@ -4,6 +4,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const db = mysql.createConnection({
     host : "localhost",
@@ -12,7 +13,7 @@ const db = mysql.createConnection({
     database : "object-locator"
 })
 
-app.get("/", (req, res) => {
+app.get ("/", (req, res) => {
     res.json("hello")
 })
 
@@ -27,7 +28,15 @@ app.post ("/login", (req, res) => {
     if (err) {
       return res.json(err);
     }
-    return res.json(data);
+    let ob = {
+      value: false
+    };
+    console.log (req.body.password);
+    console.log (data[0].password);
+    if (data[0].password == req.body.password)
+      ob.value = true;
+
+    return res.json (ob);
   });
 });
 
