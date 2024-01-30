@@ -1,0 +1,6 @@
+CREATE DATABASE `Object-Locator`;
+CREATE TABLE `object-locator`.`users` ( `uid` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) NOT NULL , `DOB` DATE NOT NULL , `email` VARCHAR(100) NOT NULL , `phone` VARCHAR(10) NOT NULL , `password` VARCHAR(100) NOT NULL , `photo` BLOB NOT NULL , PRIMARY KEY (`uid`), UNIQUE (`email`), UNIQUE (`phone`)) ENGINE = InnoDB;
+CREATE TABLE `object-locator`.`items` ( `iid` INT NOT NULL , `uid` INT NOT NULL , `name` VARCHAR(100) NOT NULL , `desc` VARCHAR(250) NOT NULL , `category` VARCHAR(100) NOT NULL , `image` BLOB NOT NULL , PRIMARY KEY (`iid`), FOREIGN KEY (uid) REFERENCES users(uid)) ENGINE = InnoDB;
+CREATE TABLE `object-locator`.`storage` ( `iid` INT NOT NULL , `location` INT NOT NULL , `Date` DATETIME NOT NULL , FOREIGN KEY (iid) REFERENCES items (iid)) ENGINE = InnoDB;
+
+ALTER TABLE `storage` CHANGE `location` `location` VARCHAR(250) NOT NULL;
