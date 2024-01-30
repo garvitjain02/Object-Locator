@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MainPage from './MyComponents/landingPage/MainPage';
 import MyProfile from './MyComponents/profile/MyProfile';
 import Details from './MyComponents/landingPage/Details';
+import Add from './MyComponents/Add';
 import Home from './MyComponents/Home';
 import {
   BrowserRouter as Router,
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/Details" element={<Details />} />
         <Route exact path="/MyProfile" element={<MyProfile />} />
         <Route exact path="/" element={<MainPage />} />
+        <Route exact path='/Add' element={<Add />} />
       </Switch>
     </Router>
     </div>

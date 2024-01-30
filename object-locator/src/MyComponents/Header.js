@@ -35,7 +35,7 @@ const Header = (props) => {
             navbarScroll
           >
             <Link to="/" className="navButton">Home</Link>
-            <Link to="#" className="navButton">Add</Link>
+            <Link to="/Add" className="navButton">Add</Link>
 
 
           </Nav>
@@ -48,7 +48,7 @@ const Header = (props) => {
             />
             <Button variant="outline-light">Search</Button>
           </Form>
-                      <NavDropdown title="Link" id="navbarScrollingDropdown">
+              <NavDropdown title="Link" id="navbarScrollingDropdown">
                      
               <NavDropdown.Item as={Link} to="/MyProfile">My Profile</NavDropdown.Item>
 

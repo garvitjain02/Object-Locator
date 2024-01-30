@@ -27,7 +27,7 @@ const MainPage = () => {
   console.log (items);
 
   // const blobToImage = (blob) => {
-  //   return new Promise(resolve => {
+  //   return (resolve => {
   //     const url = URL.createObjectURL(blob)
   //     let img = new Image()
   //     img.onload = () => {
@@ -38,6 +38,13 @@ const MainPage = () => {
   //     console.log(url);
   //   })
   // }
+
+//   const blobToImage = (blob) => {
+//     return (const myFile = new File([blob], 'image.jpeg', {
+//       type: blob.type,
+//   })
+// );
+//   }
 
   return (
     <>
