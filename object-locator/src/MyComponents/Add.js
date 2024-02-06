@@ -8,8 +8,7 @@ const Add = () => {
         <>
         <Header />
       <LeftNav />
-        <Card className = 'border-1 p-4 rounded-0' style={{ width: '40rem' , background: '#9dc2b978', margin: "1%",
-    marginLeft: "35%"}}>
+        <Card className = 'border-1 p-4 rounded-0' style={{ width: '67rem' , background: '#9dc2b978', marginTop: "1%"}}>
             <Form>
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridName">

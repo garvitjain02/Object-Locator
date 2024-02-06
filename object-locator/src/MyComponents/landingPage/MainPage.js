@@ -12,8 +12,10 @@ const MainPage = () => {
 
   useEffect (()=>{
     const getItems = async ()=>{
-      try {
-        const res = await axios.get("http://localhost:8800/getItems");
+      try { 
+        const res = await axios.post("http://localhost:8800/getItems", {
+          uid: sessionStorage.getItem('token')
+        });
         setItems (res.data);
       }
       catch (err)

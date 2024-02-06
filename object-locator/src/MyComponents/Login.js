@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import glyphicon from "../images/search.png";
 import axios from "axios";
+import "./style.css";
+// import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = () => { 
   let st = {
     width: "30%",
     marginBottom: "4%",
@@ -44,8 +46,15 @@ const Login = () => {
     }
   };
 
+  // const register = (e) =>
+  // {
+  //   document.getElementsByClassName('login')[0].style.display = 'none';
+  //   document.getElementsByClassName('signup')[0].style.display = 'block';
+  // }
+
   return (
     <>
+      
       <form className="login" method="post" onSubmit={submit}>
         <p id="wrong">*Incorrect Credentials</p>
         <input
@@ -68,6 +77,8 @@ const Login = () => {
         <Button type="submit" className="btn btn-default btn-sm" style={st1}>
           Find <img src={glyphicon} alt="search glyphicon" style={st} />
         </Button>
+        {/* <button onClick={register}>Register</button> */}
+        {/* <Link to="/signup">Register</Link> */}
       </form>
     </>
   );

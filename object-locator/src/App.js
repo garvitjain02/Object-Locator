@@ -5,12 +5,14 @@ import MainPage from './MyComponents/landingPage/MainPage';
 import MyProfile from './MyComponents/profile/MyProfile';
 import Details from './MyComponents/landingPage/Details';
 import Add from './MyComponents/Add';
-import Home from './MyComponents/Home';
+
 import {
   BrowserRouter as Router,
   Routes as Switch,
-  Route,
+  Route, Navigate
 } from "react-router-dom";
+import Home from './MyComponents/Home';
+import Register from './MyComponents/Register';
 
 function App() {
   let st = {
@@ -19,8 +21,18 @@ function App() {
 
   console.log (sessionStorage.getItem('token'));
   if (sessionStorage.getItem('token') === null)
-  {
-    return <Home />
+  { 
+    return (
+      <>
+      <Router>
+        <Switch>
+          <Route path='/' element={<Home />} />
+          <Route exact path='/signup' element={<Register />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Switch>
+      </Router>
+      </>
+    )
   }
 
   return (
@@ -31,6 +43,7 @@ function App() {
         <Route exact path="/MyProfile" element={<MyProfile />} />
         <Route exact path="/" element={<MainPage />} />
         <Route exact path='/Add' element={<Add />} />
+        
       </Switch>
     </Router>
     </div>

@@ -17,8 +17,26 @@ app.get ("/", (req, res) => {
     res.json("hello")
 })
 
+app.post ('/signup', (req, res) => {
+  const q = "INSERT INTO `users` (`uid`, `name`, `email`, `phone`, `password`) VALUES (NULL, ?)";
+
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.phone,
+    req.body.password
+  ];
+
+  db.query(q, [values], (err, data) => {
+    // 
+    if (err)
+      return res.json({status: 500});
+    return res.json({status: 200});
+  });
+})
+
 app.post ("/login", (req, res) => {
-  const q = "SELECT `password` FROM users WHERE `email` = (?)";
+  const q = "SELECT `password`, `uid` FROM users WHERE `email` = (?)";
 
   const values = [
     req.body.username
@@ -29,21 +47,28 @@ app.post ("/login", (req, res) => {
       return res.json(err);
     }
     let ob = {
-      value: false
+      value: false,
+      id: -1
     };
     console.log (req.body.password);
     console.log (data[0].password);
     if (data[0].password == req.body.password)
+    {  
       ob.value = true;
+      ob.id = data[0].uid;
+    }
 
     return res.json (ob);
   });
 });
 
 
-app.get("/getItems", (req, res) => {
-    const q = "SELECT * FROM items";
-    db.query(q, (err, data) => {
+app.post("/getItems", (req, res) => {
+    const q = "SELECT * FROM items WHERE `uid` = (?)";
+    const values = [
+      req.body.uid
+    ];
+    db.query(q, [values], (err, data) => {
       if (err) {
         console.log(err);
         return res.json(err);

@@ -18,10 +18,11 @@ const Header = (props) => {
   const logout = (e) => {
     e.preventDefault();
     sessionStorage.clear();
-    window.location.replace('/');
+    window.location.replace("");
   }
 
   return (
+  <>
     <Navbar expand="lg" style={st} className="">
       <Container fluid>
       <Nav className="me-auto">
@@ -58,6 +59,7 @@ const Header = (props) => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    </>
   );
 };
 
