@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Header from "../Header";
 import LeftNav from "../LeftNav";
 import axios from "axios";
+import Remove from "./Remove";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
@@ -48,13 +49,16 @@ const MainPage = () => {
 // );
 //   }
 
+
+
   return (
     <>
       <Header />
       <LeftNav />
           {items.map((item)=>(
-            <Link to="/Details">
+            
             <div className="itemBlock">
+              <Link to="/Details" style={{textDecoration: 'none', color: 'black'}}>
               <div className="itemImageLogo">
                 <img src={img1} alt="img" />
               </div>
@@ -64,13 +68,13 @@ const MainPage = () => {
             <p>{item.desc}</p>
           </div>
           {/* <h3>{props.ItemName}</h3> */}
-
+          </Link>
           <div className="itemButtons">
             <Button variant="primary">Update</Button>
-            <Button variant="danger">Remove</Button>
+            <Remove />
           </div>
         </div>
-      </Link>
+      
           ))}
           
     </>

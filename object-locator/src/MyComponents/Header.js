@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import Add from "./Add";
 
 // bg="primary" data-bs-theme="dark"
 
@@ -36,8 +37,9 @@ const Header = (props) => {
             navbarScroll
           >
             <Link to="/" className="navButton">Home</Link>
-            <Link to="/Add" className="navButton">Add</Link>
+            {/* <Link to="/Add" className="navButton">Add</Link> */}
 
+          <Add />  
 
           </Nav>
           <Form className="d-flex me-3">

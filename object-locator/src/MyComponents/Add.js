@@ -1,15 +1,28 @@
-import React from 'react'
-import {Form , Row , Col, Button, Card} from 'react-bootstrap';
-import Header from "./Header";
-import LeftNav from "./LeftNav";
+import React, {useState} from "react";
+import Modal from 'react-bootstrap/Modal';
+import {Form , Row , Col, Button} from 'react-bootstrap';
 
 const Add = () => {
-    return (
-        <>
-        <Header />
-      <LeftNav />
-        <Card className = 'border-1 p-4 rounded-0' style={{ width: '67rem' , background: '#9dc2b978', marginTop: "1%"}}>
-            <Form>
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <div>
+      <Button variant="transparent" className="text-white" onClick={handleShow} style={{border:'none'}}>
+        Add
+      </Button>
+
+      <Modal backdrop={false} fade={false} show={show} onHide={handleClose} style={{padding: '0%'}} size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Item</Modal.Title>
+        </Modal.Header>
+        <Form>
+        <Modal.Body>
+        
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridName">
           <Form.Label>Item Name</Form.Label>
@@ -36,12 +49,20 @@ const Add = () => {
         <Form.Label>Image</Form.Label>
         <Form.Control type="file" />
       </Form.Group>
-      <Button type="submit" className="btn btn-default btn-sm">Add</Button>
-    </Form>
-        </Card>
-        
-        </>
-    )
+    
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button type="submit" variant="primary" onClick={handleClose}>
+            Add
+          </Button>
+        </Modal.Footer>
+        </Form>
+      </Modal>
+    </div>
+  )
 }
 
 export default Add
