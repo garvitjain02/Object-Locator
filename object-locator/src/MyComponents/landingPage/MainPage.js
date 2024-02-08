@@ -6,77 +6,123 @@ import { Link } from "react-router-dom";
 import Header from "../Header";
 import LeftNav from "../LeftNav";
 import axios from "axios";
-import Remove from "./Remove";
+// import Remove from "./Remove";
+import Modal from "react-bootstrap/Modal";
+import { Form } from "react-bootstrap";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
 
-  useEffect (()=>{
-    const getItems = async ()=>{
-      try { 
+  useEffect(() => {
+    const getItems = async () => {
+      try {
         const res = await axios.post("http://localhost:8800/getItems", {
-          uid: sessionStorage.getItem('token')
+          uid: sessionStorage.getItem("token"),
         });
-        setItems (res.data);
-      }
-      catch (err)
-      {
+        setItems(res.data);
+      } catch (err) {
         console.log(err);
       }
     };
-    getItems ();
+    getItems();
   }, []);
 
-  console.log (items);
+  console.log(items);
 
-  // const blobToImage = (blob) => {
-  //   return (resolve => {
-  //     const url = URL.createObjectURL(blob)
-  //     let img = new Image()
-  //     img.onload = () => {
-  //       URL.revokeObjectURL(url)
-  //       resolve(img)
-  //     }
-  //     img.src = url
-  //     console.log(url);
-  //   })
-  // }
+  const [show, setShow] = useState(false);
 
-//   const blobToImage = (blob) => {
-//     return (const myFile = new File([blob], 'image.jpeg', {
-//       type: blob.type,
-//   })
-// );
-//   }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
+  const [id, setId] = useState();
 
+  const submit = async (e) => {
+    try {
+      axios.post("http://localhost:8800/removeItem", {
+        id: id,
+      });
+      window.location.replace("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
       <Header />
       <LeftNav />
-          {items.map((item)=>(
-            
-            <div className="itemBlock">
-              <Link to="/Details" style={{textDecoration: 'none', color: 'black'}}>
-              <div className="itemImageLogo">
-                <img src={img1} alt="img" />
-              </div>
+      {items.map((item) => (
+        <div className="itemBlock">
+          <Link
+            to="/Details"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div className="itemImageLogo">
+              <img src={img1} alt="img" />
+            </div>
             <div className="itemDesc">
-            <h3>{item.name}</h3>
-            <h5>{item.location}</h5>
-            <p>{item.desc}</p>
-          </div>
-          {/* <h3>{props.ItemName}</h3> */}
+              <h3>{item.name}</h3>
+              <h5>{item.location}</h5>
+              <p>{item.desc}</p>
+            </div>
+            {/* <h3>{props.ItemName}</h3> */}
           </Link>
           <div className="itemButtons">
-            <Button variant="primary">Update</Button>
-            <Remove />
+            <Link to="/UpdateItem">
+              <Button variant="primary">Update</Button>
+            </Link>
+
+            <div>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  setId(item.iid);
+                  handleShow();
+                }}
+              >
+                Remove
+              </Button>
+
+              <Modal
+                backdrop={false}
+                fade={false}
+                show={show}
+                onHide={handleClose}
+                style={{ padding: "0%" }}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header
+                  style={{ backgroundColor: "rgb(16 94 98)" }}
+                  closeButton
+                >
+                  <Modal.Title>Remove Item</Modal.Title>
+                </Modal.Header>
+                <Form>
+                  <Modal.Body
+                    style={{
+                      paddingTop: "1%",
+                      paddingBottom: "5%",
+                      fontSize: "110%",
+                    }}
+                  >
+                    Do you really want to remove this Item?
+                  </Modal.Body>
+                  <Modal.Footer style={{ backgroundColor: "whitesmoke" }}>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" variant="danger" onClick={submit}>
+                      Remove
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal>
+            </div>
           </div>
         </div>
-      
-          ))}
-          
+      ))}
     </>
   );
 };

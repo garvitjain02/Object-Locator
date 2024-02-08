@@ -28,7 +28,7 @@ app.post ('/signup', (req, res) => {
   ];
 
   db.query(q, [values], (err, data) => {
-    // 
+    console.log (data); 
     if (err)
       return res.json({status: 500});
     return res.json({status: 200});
@@ -62,6 +62,55 @@ app.post ("/login", (req, res) => {
   });
 });
 
+app.post("/addItem", (req, res) => {
+  var uid = req.body.uid;
+  var name = req.body.name;
+  var desc = req.body.desc;
+  var loc = req.body.location;
+  var category = req.body.category;
+  var pic = req.body.picture;
+  var today = new Date();
+
+  // Get the day of the month
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  
+  if (dd < 10) {
+      dd = '0' + dd;
+  } 
+  if (mm < 10) {
+      mm = '0' + mm;
+  } 
+  
+  today = yyyy + '-' + mm + '-' + dd;
+  console.log(today);
+
+  var query = "SELECT MAX(`iid`) as `iid` from `items`";
+  db.query (query, (err, data) => {
+    const iid = data[0].iid + 1;
+    
+  
+  console.log (iid);
+  const q = "INSERT INTO `items` (`iid`, `uid`, `name`, `desc`, `category`, `location`, `date`) VALUES (" + iid + ", " + uid + ", '" + name + "', '" + desc + "', '" + category + "', '" + loc + "', " + today + ")";
+  db.query (q, (err, data) => {
+    console.log (data);
+    if (err)
+        console.log (err);
+    
+    return res.json ({status: 200});
+  });});
+});
+
+app.post("/removeItem", (req, res) => {
+  console.log(req.body.id);
+  const q = "DELETE FROM `items` WHERE `iid` = " + req.body.id;
+  db.query (q, (err, data) => {
+    if (err)
+      console.log(err);
+  });
+  return res.json ({status: 200});
+});
 
 app.post("/getItems", (req, res) => {
     const q = "SELECT * FROM items WHERE `uid` = (?)";

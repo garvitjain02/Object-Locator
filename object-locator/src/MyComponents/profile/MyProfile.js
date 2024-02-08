@@ -1,37 +1,3 @@
-// import React from 'react'
-// import Header from '../Header'
-// import LeftNav from '../LeftNav'
-// // import PropTypes from 'prop-types'
-
-// const MyProfile = props => {
-//   return (
-//     <div>
-//       <Header />
-//       <LeftNav />
-//       <div className='myProfileDetails'>
-//         <h3>Personal Details :</h3>
-//         <hr />
-//         <pre>
-//         <h5>
-//           Name          : Garvit Jain <br />
-//           Date of Birth : <br />
-//           Username      : <br />
-//           Email         : <br />
-//           Phone Number  : <br />
-//         </h5>
-//         </pre>
-//       </div>
-//     </div>
-//   )
-// }
-
-
-// MyProfile.propTypes = {
-
-// }
-
-// export default MyProfile
-
 import React from 'react'
 import Header from '../Header'
 import LeftNav from '../LeftNav'
@@ -39,6 +5,7 @@ import profile from '../../images/blanket.jpeg';
 // import PropTypes from 'prop-types'
 import {Card, Table, Container, Button} from 'react-bootstrap';
 import "../style.css";
+import { Link } from 'react-router-dom';
 
 const MyProfile = props => {
   return (
@@ -75,7 +42,9 @@ const MyProfile = props => {
               </Table>
           </Card.Body>
           <Card.Footer className='text-center'>
-                        <Button  color='warning' >Update Profile</Button>
+            <Link to='/EditProfile'>
+            <Button  color='warning' >Update Profile</Button>
+            </Link>
           </Card.Footer>
         </Card>
       </div>

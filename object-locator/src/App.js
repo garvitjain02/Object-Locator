@@ -13,6 +13,8 @@ import {
 } from "react-router-dom";
 import Home from './MyComponents/Home';
 import Register from './MyComponents/Register';
+import EditProfile from './MyComponents/profile/EditProfile';
+import EditDetails from './MyComponents/landingPage/EditDetails';
 
 function App() {
   let st = {
@@ -43,7 +45,8 @@ function App() {
         <Route exact path="/MyProfile" element={<MyProfile />} />
         <Route exact path="/" element={<MainPage />} />
         <Route exact path='/Add' element={<Add />} />
-        
+        <Route exact path='/EditProfile' element={<EditProfile />} />
+        <Route exact path='/UpdateItem' element={<EditDetails />} />
       </Switch>
     </Router>
     </div>
