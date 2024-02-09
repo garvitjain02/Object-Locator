@@ -125,6 +125,15 @@ app.post ("/updateProfile", (req, res) => {
     if (err)
       console.log (err);
     return res.json ({status: 200});
+  });
+});
+
+app.post("/getCategories", (req, res) => {
+  const q = "SELECT DISTINCT(`category`) FROM `items` WHERE `uid` = " + req.body.uid; 
+  db.query (q, (err, data) => {
+    if (err)
+      console.log (err);
+    return res.json (data);
   })
 });
 
@@ -146,6 +155,19 @@ app.post("/removeItem", (req, res) => {
       console.log(err);
   });
   return res.json ({status: 200});
+});
+
+app.post ("/getCategoryItems", (req, res) => {
+  const q = "SELECT * FROM items WHERE `uid` = " + req.body.uid + " AND `category` = '" + req.body.category + "'";
+  
+  db.query (q, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    }
+    return res.json(data);
+
+  });
 });
 
 app.post("/getItems", (req, res) => {

@@ -15,6 +15,7 @@ import Home from './MyComponents/Home';
 import Register from './MyComponents/Register';
 import EditProfile from './MyComponents/profile/EditProfile';
 import EditDetails from './MyComponents/landingPage/EditDetails';
+import Category from './MyComponents/Category';
 
 function App() {
   let st = {
@@ -47,6 +48,7 @@ function App() {
         <Route exact path='/Add' element={<Add />} />
         <Route exact path='/EditProfile' element={<EditProfile />} />
         <Route exact path='/UpdateItem' element={<EditDetails />} />
+        <Route exact path='/Category' element={<Category />} />
       </Switch>
     </Router>
     </div>

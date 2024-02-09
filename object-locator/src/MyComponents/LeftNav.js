@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import "./style.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const LeftNav = () => {
+  const [cat, setCat] = useState([]);
+
+  useEffect (() => {
+    const categories = async () => {
+      try {
+        const res = await axios.post("http://localhost:8800/getCategories", {
+          uid: sessionStorage.getItem("token"),
+        });
+        setCat (res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    categories ();
+  }, []);
+
   return (
     <>
       {/* bg-light */}
@@ -12,15 +30,11 @@ const LeftNav = () => {
         onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
       >
         <div className="sidebar-sticky"></div>
-        <Nav.Item>
-          <Nav.Link href="/home" className="leftNavLink">Furniture</Nav.Link>
+        {cat.map((c) => (
+          <Nav.Item>
+          <Link to={'/Category'} state={c} className="leftNavLink">{c.category}</Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-1" className="leftNavLink">Electronics</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-2" className="leftNavLink">Miscellaneous</Nav.Link>
-        </Nav.Item>
+        ))}
       </Nav>
     </>
   );
