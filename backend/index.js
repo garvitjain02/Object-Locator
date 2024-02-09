@@ -102,6 +102,42 @@ app.post("/addItem", (req, res) => {
   });});
 });
 
+app.post("/updateItem", (req, res) => {
+  var iid = req.body.iid;
+  var name = req.body.name;
+  var desc = req.body.desc;
+  var loc = req.body.location;
+  var category = req.body.category;
+  var pic = req.body.picture;
+
+  const q = "UPDATE `items` SET `name` = '" + name + "', `desc` = '" + desc + "', `category` = '" + category + "', `location` = '" + loc + "' WHERE `iid` = " + iid;
+  db.query (q, (err, data) => {
+    if (err)
+      console.log (error);
+    return res.json ({status: 200});
+  });
+});
+
+app.post ("/updateProfile", (req, res) => {
+  const q = "UPDATE `users` SET `email` = '" + req.body.email + "', `phone` = '" + req.body.phone + "', `password` = '" + req.body.pass + "' WHERE `uid` = " + req.body.uid;
+
+  db.query (q, (err, data) => {
+    if (err)
+      console.log (err);
+    return res.json ({status: 200});
+  })
+});
+
+app.post ("/getProfile", (req, res) => {
+  const q = "SELECT * FROM `users` WHERE `uid` = " +  req.body.uid;
+  db.query (q, (err, data) => {
+    if (err)
+      console.log (err);
+    console.log(data);
+    return res.json(data);
+  })
+})
+
 app.post("/removeItem", (req, res) => {
   console.log(req.body.id);
   const q = "DELETE FROM `items` WHERE `iid` = " + req.body.id;

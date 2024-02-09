@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../Header'
 import LeftNav from '../LeftNav'
 import profile from '../../images/blanket.jpeg';
@@ -6,13 +6,33 @@ import profile from '../../images/blanket.jpeg';
 import {Card, Table, Container, Button} from 'react-bootstrap';
 import "../style.css";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
-const MyProfile = props => {
+const MyProfile = () => {
+  const [prof, setProf] = useState([]);
+
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const res = await axios.post("http://localhost:8800/getProfile", {
+          uid: sessionStorage.getItem("token"),
+        });
+        setProf(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProfile();
+  }, []);
+
+  console.log(prof);
+
   return (
     <div>
       <Header />
       <LeftNav />
       <div className='myProfileDetails'>
+      {prof.map((profile) => (
         <Card className='mt-2 border-1 rounded-0 shadow-sm'>
           <Card.Body>
             <h3>Personal Details</h3>
@@ -20,33 +40,30 @@ const MyProfile = props => {
                 <tbody>
                   <tr>
                   <td>NAME</td>
-                  <td>Garvit Jain</td>
+                  <td>{profile.name}</td>
                 </tr>
                 <tr>
                   <td>EMAIL</td>
-                  <td></td>
+                  <td>{profile.email}</td>
                 </tr>
                 <tr>
                   <td>DATE OF BIRTH</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>USERNAME</td>
-                  <td></td>
+                  <td>{profile.DOB}</td>
                 </tr>
                 <tr>
                   <td>PHONE NUMBER</td>
-                  <td></td>
+                  <td>{profile.phone}</td>
                 </tr>
                 </tbody>
               </Table>
           </Card.Body>
           <Card.Footer className='text-center'>
-            <Link to='/EditProfile'>
+            <Link to={'/EditProfile'} state={profile}>
             <Button  color='warning' >Update Profile</Button>
             </Link>
           </Card.Footer>
         </Card>
+        ))}
       </div>
       <div className='ProfilePic'>
         <Container className='text-center mt-5 mr-2 pd-2'>

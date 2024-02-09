@@ -53,10 +53,7 @@ const MainPage = () => {
       <LeftNav />
       {items.map((item) => (
         <div className="itemBlock">
-          <Link
-            to="/Details"
-            style={{ textDecoration: "none", color: "black" }}
-          >
+          <Link to={"/Details"} state={item} style={{ color: "black" }}>
             <div className="itemImageLogo">
               <img src={img1} alt="img" />
             </div>
@@ -68,7 +65,7 @@ const MainPage = () => {
             {/* <h3>{props.ItemName}</h3> */}
           </Link>
           <div className="itemButtons">
-            <Link to="/UpdateItem">
+            <Link to={"/UpdateItem"} state={item}>
               <Button variant="primary">Update</Button>
             </Link>
 
@@ -113,9 +110,11 @@ const MainPage = () => {
                     <Button variant="secondary" onClick={handleClose}>
                       Cancel
                     </Button>
-                    <Button type="submit" variant="danger" onClick={submit}>
-                      Remove
-                    </Button>
+                    <Link to={"/"}>
+                      <Button type="submit" variant="danger" onClick={submit}>
+                        Remove
+                      </Button>
+                    </Link>
                   </Modal.Footer>
                 </Form>
               </Modal>
