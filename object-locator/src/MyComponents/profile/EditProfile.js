@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../Header'
 import LeftNav from '../LeftNav'
-import profile from '../../images/blanket.jpeg';
+import profile from '../../images/profile.png';
 // import PropTypes from 'prop-types'
 import {Card, Table, Container, Button} from 'react-bootstrap';
 import "../style.css";

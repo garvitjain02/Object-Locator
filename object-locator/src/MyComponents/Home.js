@@ -22,7 +22,14 @@ const Home = props => {
     marginLeft: "40%",
     padding: "0",
     fontSize: "150%",
+    marginBottom: "10%"
   };
+
+  let reg  = {
+    color: 'white',
+    textDecoration: 'none',
+    marginLeft: "32%"
+  }
 
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -81,7 +88,7 @@ const Home = props => {
         <Button type="submit" className="btn btn-default btn-sm" style={st1}>
           Find <img src={glyphicon} alt="search glyphicon" style={st} />
         </Button>
-        <Link to='/signup'>Register</Link>
+        <Link to='/signup' style={reg}>New User Register</Link>
         </form>
            
         </div>

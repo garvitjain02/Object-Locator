@@ -97,7 +97,7 @@ app.post("/addItem", (req, res) => {
     console.log (data);
     if (err)
         console.log (err);
-    
+
     return res.json ({status: 200});
   });});
 });
@@ -114,6 +114,7 @@ app.post("/updateItem", (req, res) => {
   db.query (q, (err, data) => {
     if (err)
       console.log (error);
+    
     return res.json ({status: 200});
   });
 });
@@ -153,6 +154,7 @@ app.post("/removeItem", (req, res) => {
   db.query (q, (err, data) => {
     if (err)
       console.log(err);
+    console.log (data);
   });
   return res.json ({status: 200});
 });
@@ -169,6 +171,18 @@ app.post ("/getCategoryItems", (req, res) => {
 
   });
 });
+
+app.post ("/voiceRequest", (req, res) => {
+  const q = req.body.query;
+  console.log(q);
+
+  db.query (q, (err, data) => {
+    if (err)
+      return res.json (err);
+    console.log (data);
+    return res.json (data); 
+  })
+})
 
 app.post("/getItems", (req, res) => {
     const q = "SELECT * FROM items WHERE `uid` = (?)";

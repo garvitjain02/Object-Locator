@@ -7,6 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import Add from "./Add";
+import Voice from "./voice";
 
 // bg="primary" data-bs-theme="dark"
 
@@ -50,8 +51,9 @@ const Header = (props) => {
               aria-label="Search"
             />
             <Button variant="outline-light">Search</Button>
+            <Voice />
           </Form>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
+              <NavDropdown title="Profile" id="navbarScrollingDropdown">
                      
               <NavDropdown.Item as={Link} to="/MyProfile">My Profile</NavDropdown.Item>
 
