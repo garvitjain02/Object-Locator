@@ -40,7 +40,7 @@ def commands():
         for i in range(len(doc)):
             if doc[i].pos_ == "VERB":
                 action.append(doc[i].text)
-            print(doc[i].text, doc[i].pos_, doc[i].dep_)
+            # print(doc[i].text, doc[i].pos_, doc[i].dep_)
 
         if action[0] in ["find", "search"]:
             it = []
@@ -78,29 +78,34 @@ def commands():
                     loc = i
                     while doc[loc].dep_ != "prep" and loc < len(doc):
                         if doc[loc].dep_ == "cc":
+                            it = it.rstrip(it[-1])
                             item.append(it)
                             it = ""
                         else:
                             it += doc[loc].text + " "
                         loc += 1
                     i = loc
+                    it = it.rstrip(it[-1])
                     item.append(it)
                 else:
                     i += 1
-        
-            check = False
-            for i in range(len(doc)):
-                if not check:
-                    if doc[i].dep_ == "prep":
-                        check = True
-                        item_location += doc[i].text
-                else:
-                    item_location += " " + doc[i].text
+            while i < len(doc) :
+                item_location += doc[i].text + " "
+                i += 1
+            print (item, action, item_location)
+            # check = False
+            # for i in range(len(doc)):
+            #     if not check:
+            #         if doc[i].dep_ == "prep":
+            #             check = True
+            #             item_location += doc[i].text
+            #     else:
+            #         item_location += " " + doc[i].text
         
         else:
             return jsonify({'query' : 'invalid'}) , 200
         query =  change_to_query(action[0] , item , item_location , user_id)
-        #print(query)
+        print(query)
         return jsonify({'query' : query}) , 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -115,10 +120,10 @@ def change_to_query(action, item, item_location , user_id):
     elif action in ["delete", "remove"]:
         for i in item:
             return (f"DELETE FROM Items WHERE name = '{i}' AND uid = {user_id}")
-    elif action[0] in ["kept", "placed", "stored", "store"]:
+    elif action in ["kept", "placed", "stored", "store"]:
         for i in item:
-            return (f"INSERT INTO Items(name , location) VALUES ({i} , {item_location})")
-    elif action[0] in ["update"]:
+            return (f"INSERT INTO Items (uid, name, location) VALUES ( {user_id} , '{i}' , '{item_location}' )")
+    elif action in ["update"]:
         for i in item:
             return (
                 f"UPDATE Items SET location = {item_location} WHERE name = {i} AND uid = {user_id}"

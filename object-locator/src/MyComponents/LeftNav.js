@@ -31,7 +31,7 @@ const LeftNav = () => {
       >
         <div className="sidebar-sticky"></div>
         {cat.map((c) => (
-          <Nav.Item>
+          <Nav.Item style={{marginTop: '4%'}}>
           <Link to={'/Category'} state={c} className="leftNavLink">{c.category}</Link>
         </Nav.Item>
         ))}

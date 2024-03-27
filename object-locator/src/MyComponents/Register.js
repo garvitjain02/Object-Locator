@@ -39,7 +39,7 @@ const Register = () => {
       console.log(res.data);
       if (res.data.status === 200)
       {
-        sessionStorage.setItem("token", true);
+        sessionStorage.setItem("token", res.data.insertId);
         window.location.replace('/');
       }
       else

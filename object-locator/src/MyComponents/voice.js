@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {Button} from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from "react-router-dom";
 
 const Voice = () => {
     const [recording, setRecording] = useState(false);
@@ -25,7 +24,7 @@ const Voice = () => {
       if (response.ok){
         const Queryresponse = await fetch(`http://localhost:5000/api/query?userid=${userid}&audiotext=${audioText}`);
         const queryData =await Queryresponse.json();
-        console.log (Queryresponse);
+        console.log (queryData);
         
 
         if(Queryresponse.ok){
@@ -43,7 +42,7 @@ const Voice = () => {
               voiceOutput = "Item Cannot be Deleted";
             }else if (action === "UPDATE"){
               voiceOutput = "Updated";
-            }else if (action === "CREATE"){
+            }else if (action === "INSERT"){
               voiceOutput = "Added";
             }else if (action === "SELECT"){
               if (voiceResponse.data.length > 0) {
@@ -90,7 +89,7 @@ const Voice = () => {
             <Modal backdrop={false} fade={false} show={show} onHide={() => setShow(false)} style={{padding: '0%'}} size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton onClick={() => {setShow(false); window.location.reload();}}>
           <Modal.Title>Voice Assitant</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -99,9 +98,9 @@ const Voice = () => {
             </Button>
         </Modal.Body>
         <Modal.Footer>
-            <Link to="/"><Button variant="danger" onClick={() => setShow(false)}>
+            <Button variant="danger" onClick={() => {setShow(false); window.location.reload();}}>
             Close
-          </Button></Link>
+          </Button>
         </Modal.Footer>
       </Modal>
         </div>

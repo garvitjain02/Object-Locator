@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../style.css";
 import img1 from "../../images/img1.jpg";
+import empty from "../../images/no-items-found.jpg";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Header from "../Header";
@@ -27,7 +28,7 @@ const MainPage = () => {
     getItems();
   }, []);
 
-  console.log(items);
+  console.log(items.length);
 
   const [show, setShow] = useState(false);
 
@@ -51,6 +52,8 @@ const MainPage = () => {
     <>
       <Header />
       <LeftNav />
+      {items.length > 0 ? (
+        <>
       {items.map((item) => (
         <div className="itemBlock">
           <Link to={"/Details"} state={item} style={{ color: "black" }}>
@@ -121,7 +124,9 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))}</>) : (<img src={empty} alt="img" style={{ width: '40%',
+        marginTop: '3%',
+        marginLeft: '17%'}} />)}
     </>
   );
 };

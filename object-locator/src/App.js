@@ -5,6 +5,7 @@ import MainPage from './MyComponents/landingPage/MainPage';
 import MyProfile from './MyComponents/profile/MyProfile';
 import Details from './MyComponents/landingPage/Details';
 import Add from './MyComponents/Add';
+import Search from './MyComponents/SearchItem';
 
 import {
   BrowserRouter as Router,
@@ -49,6 +50,7 @@ function App() {
         <Route exact path='/EditProfile' element={<EditProfile />} />
         <Route exact path='/UpdateItem' element={<EditDetails />} />
         <Route exact path='/Category' element={<Category />} />
+        <Route exact path="/SearchItem" element={<Search />} />
       </Switch>
     </Router>
     </div>

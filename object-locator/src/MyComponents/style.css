@@ -200,7 +200,7 @@
   margin-left: 2%;
   border: 1px solid black;
   padding: 2%;
-  height: 28vw;
+  height: 34vw;
 }
 
 .detailsContentRight h2 {
@@ -253,7 +253,8 @@
 .leftNavLink {
   text-decoration: none;
   margin-left: 8%;
-  font-size: large;
+  font-size: 140%;
+  color: #451212;
 }
 
   .table-striped>tbody>tr:nth-child(odd)>td,

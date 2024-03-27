@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -22,6 +22,9 @@ const Header = (props) => {
     sessionStorage.clear();
     window.location.replace("");
   }
+
+  const [item, setItem] = useState("");
+  console.log(item);
 
   return (
   <>
@@ -49,10 +52,14 @@ const Header = (props) => {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={(e) => setItem(e.target.value)}
             />
+            <Link to={`/SearchItem?name=${item}`}>
             <Button variant="outline-light">Search</Button>
+            </Link>
             <Voice />
           </Form>
+          
               <NavDropdown title="Profile" id="navbarScrollingDropdown">
                      
               <NavDropdown.Item as={Link} to="/MyProfile">My Profile</NavDropdown.Item>
