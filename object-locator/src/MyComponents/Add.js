@@ -15,9 +15,27 @@ const Add = () => {
   const [category, setCategory] = useState("");
   const [picture, setPicture] = useState([]);
 
+  const api_key = "493967971724379"
+  const cloud_name = "dpgf5do9z"
+
   const submit = async (e) => {
     e.preventDefault();
     handleClose();
+
+    const signatureResponse = await axios.get("http://localhost:8800/get-signature");
+    const data = new FormData()
+    data.append("file", document.querySelector("#file-field").files[0])
+    data.append("api_key", api_key)
+    data.append("signature", signatureResponse.data.signature)
+    data.append("timestamp", signatureResponse.data.timestamp)
+
+    const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: function (e) {
+        console.log(e.loaded / e.total)
+      }
+    })
+    console.log(cloudinaryResponse.data)
 
     try {
       await axios.post("http://localhost:8800/addItem", {
@@ -26,7 +44,11 @@ const Add = () => {
         desc: desc,
         location: loc,
         category: category,
-        picture: picture
+        photoData : {
+          public_id: cloudinaryResponse.data.public_id,
+          version: cloudinaryResponse.data.version,
+          signature: cloudinaryResponse.data.signature
+        }
       });
     } catch (err) {
       console.log(err);
@@ -76,7 +98,7 @@ const Add = () => {
         <Form.Control type="file" onChange={(e) => {
           const [file] = e.target.files;
           setPicture((picture) => [...picture, file]);
-        }}/>
+        }} id="file-field" />
       </Form.Group>
     
         </Modal.Body>

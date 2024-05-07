@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import glyphicon from "../images/search.png";
 import axios from "axios";
@@ -8,6 +8,10 @@ import bg1 from '../images/bg1.jpg';
 import './style.css';
 import Typed from "react-typed";
 import { Link } from "react-router-dom";
+import {GoogleLogin} from "react-google-login";
+import {gapi} from "gapi-script"; 
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 // import Login from './Login';
 
 const Home = props => {
@@ -29,6 +33,56 @@ const Home = props => {
     color: 'white',
     textDecoration: 'none',
     marginLeft: "32%"
+  }
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: "303860230164-e83e58ojuicv96ia2g918mi6ncol8360.apps.googleusercontent.com",
+        scope: ""
+      })
+    };
+
+    gapi.load ('client:auth2', start);
+  });
+
+  const onSuccess = async(res) => {
+    console.log ("Login Successful! Current User : ", res.profileObj);
+    try {
+      const result = await axios.post("http://localhost:8800/signup", {
+        name: res.profileObj.name,
+        email: res.profileObj.email,
+        phone: "",
+        password: "",
+      });
+      console.log(result.data);
+      // if (res.data.status === 200)
+      // {
+      //   sessionStorage.setItem("token", res.data.insertId);
+      //   window.location.replace('/');
+      // }
+    } catch (err) {
+     console.log(err);
+    }
+    try {
+      const result = await axios.post("http://localhost:8800/login", {
+      username: res.profileObj.email,
+      password: ""
+    });
+    console.log(result.data.value);
+    console.log(sessionStorage.getItem("token"));
+    if (result.data.value) {
+      sessionStorage.setItem("token", result.data.id);
+      window.location.reload();
+    }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  const onFailure = (res) => {
+    console.log ("Login NOT Successful! res : ", res);
   }
 
   const [user, setUser] = useState("");
@@ -58,8 +112,17 @@ const Home = props => {
     }
   };
 
+  // function onSignIn(googleUser) {
+  //   var profile = googleUser.getBasicProfile();
+  //   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  //   console.log('Name: ' + profile.getName());
+  //   console.log('Image URL: ' + profile.getImageUrl());
+  //   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  // }
+
   return (
     <>
+    <meta name="google-signin-client_id" content="303860230164-e83e58ojuicv96ia2g918mi6ncol8360.apps.googleusercontent.com"/>
     <div className="container">
         <img src={bg} alt="background" id="background"/>
         <div className="inner">
@@ -88,6 +151,9 @@ const Home = props => {
         <Button type="submit" className="btn btn-default btn-sm" style={st1}>
           Find <img src={glyphicon} alt="search glyphicon" style={st} />
         </Button>
+        <span style={{width: '6vw', height: '6.5vh', marginLeft: '40.5%', marginTop: '-4%'}}>
+        <GoogleLogin clientId="303860230164-e83e58ojuicv96ia2g918mi6ncol8360.apps.googleusercontent.com" buttonText="Login" onSuccess={onSuccess} onFailure={onFailure} />
+        </span>
         <Link to='/signup' style={reg}>New User Register</Link>
         </form>
            

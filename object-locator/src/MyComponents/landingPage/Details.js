@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-// import PropTypes from 'prop-types'
 import img1 from "../../images/img1.jpg";
 import "../style.css";
 import Button from "react-bootstrap/Button";
 import Header from "../Header";
 import { Link, useLocation } from "react-router-dom";
-// import Remove from "./Remove";
 import { Form, Modal } from "react-bootstrap";
 import axios from "axios";
 

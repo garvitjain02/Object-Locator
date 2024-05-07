@@ -57,15 +57,41 @@ def commands():
             item.append(" ".join(it))
 
         elif action[0] in ["update"]:
-            i = 0
+            # i = 0
+            # while i < len(doc) - 1:
+            #     if doc[i].dep_ == "prep":
+            #         break
+            #     i += 1
+            # item.append(doc[i - 1].text)
+            # i += 1      
+            # for i in range(i, len(doc)):
+            #     item_location += doc[i].text + " "
+            
+            it = ""
+            i = 1
             while i < len(doc) - 1:
                 if doc[i].dep_ == "prep":
                     break
-                i += 1
-            item.append(doc[i + 1].text)
-            i += 3
-            for i in range(i, len(doc)):
+                if doc[i].pos_ == "ADJ":
+                    it += doc[i].text + " "
+                if doc[i].pos_ == "NOUN":
+                    loc = i
+                    while doc[loc].dep_ != "prep" and loc < len(doc):
+                        if doc[loc].dep_ == "cc":
+                            it = it.rstrip(it[-1])
+                            item.append(it)
+                            it = ""
+                        else:
+                            it += doc[loc].text + " "
+                        loc += 1
+                    i = loc
+                    it = it.rstrip(it[-1])
+                    item.append(it)
+                else:
+                    i += 1
+            while i < len(doc) :
                 item_location += doc[i].text + " "
+                i += 1
         elif action[0] in ["kept", "placed", "stored", "store", "add"]:
             it = ""
             i = 0
@@ -126,7 +152,7 @@ def change_to_query(action, item, item_location , user_id):
     elif action in ["update"]:
         for i in item:
             return (
-                f"UPDATE Items SET location = {item_location} WHERE name = {i} AND uid = {user_id}"
+                f"UPDATE Items SET location = '{item_location}' WHERE name = '{i}' AND uid = {user_id}"
             )
 
 @app.route('/api/voice-output')
