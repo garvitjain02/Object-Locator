@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../style.css";
-import img1 from "../../images/img1.jpg";
+// import img1 from "../../images/img1.jpg";
 import empty from "../../images/no-items-found.jpg";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
@@ -58,7 +58,7 @@ const MainPage = () => {
         <div className="itemBlock">
           <Link to={"/Details"} state={item} style={{ color: "black" }}>
             <div className="itemImageLogo">
-              <img src={img1} alt="img" />
+              <img src={item.image} alt="img" />
             </div>
             <div className="itemDesc">
               <h3>{item.name}</h3>

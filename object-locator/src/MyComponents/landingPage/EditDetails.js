@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import img1 from '../../images/img1.jpg';
+// import img1 from '../../images/img1.jpg';
 import '../style.css';
 import Button from 'react-bootstrap/Button';
 import Header from '../Header';
@@ -15,8 +15,26 @@ const EditDetails: FC<{}> = (props) => {
   const [category, setCategory] = useState(state.category);
   const [picture, setPicture] = useState([]);
 
+  const api_key = "493967971724379"
+  const cloud_name = "dpgf5do9z"
+
   const submit = async (e) => {
     e.preventDefault();
+    const signatureResponse = await axios.get("http://localhost:8800/get-signature");
+    const data = new FormData()
+    data.append("file", document.querySelector("#file-field").files[0])
+    data.append("api_key", api_key)
+    data.append("signature", signatureResponse.data.signature)
+    data.append("timestamp", signatureResponse.data.timestamp)
+
+    const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: function (e) {
+        console.log(e.loaded / e.total)
+      }
+    })
+    console.log(cloudinaryResponse.data)
+
     try {
       await axios.post("http://localhost:8800/updateItem", {
         iid: state.iid,
@@ -24,7 +42,11 @@ const EditDetails: FC<{}> = (props) => {
         desc: desc,
         location: loc,
         category: category,
-        picture: picture
+        photoData : {
+          public_id: cloudinaryResponse.data.public_id,
+          version: cloudinaryResponse.data.version,
+          signature: cloudinaryResponse.data.signature
+        }
       });
     } catch (err) {
       console.log(err);
@@ -37,7 +59,7 @@ const EditDetails: FC<{}> = (props) => {
       <Header />
       <div className='detailsContent'>
         <div className='detailsContentLeft'>
-            <img src={img1} alt="img1" />
+            <img src={state.image} alt="img1" />
         </div>
         <h2 style={{marginLeft: '39%', marginBottom: '0%'}}>Update Item</h2>
         <div className='detailsContentRight'>
@@ -71,7 +93,7 @@ const EditDetails: FC<{}> = (props) => {
         <Form.Control type="file" onChange={(e) => {
           const [file] = e.target.files;
           setPicture((picture) => [...picture, file]);
-        }}/>
+        }} id='file-field' />
       </Form.Group>
             <Link to={'/'}><Button variant="primary" id='btn1' onClick={submit}>Update</Button></Link>
             <Link to='/'><Button variant="danger" id='btn2'>Cancel</Button></Link>

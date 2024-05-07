@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import img1 from "../../images/img1.jpg";
+// import img1 from "../../images/img1.jpg";
 import "../style.css";
 import Button from "react-bootstrap/Button";
 import Header from "../Header";
@@ -33,7 +33,7 @@ const Details: FC<{}> = (props) => {
       <Header />
       <div className="detailsContent">
         <div className="detailsContentLeft">
-          <img src={img1} alt="img1" />
+          <img src={state.image} alt="img1" />
         </div>
 
         <div className="detailsContentRight" style={{ height: "33vw" }}>

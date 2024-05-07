@@ -9,15 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// // require("dotenv").config()
-// // const cloudinary = require("cloudinary").v2
-// // const fse = require("fs-extra")
-// const cloudinaryConfig = cloudinary.config({
-//   cloud_name: process.env.CLOUDNAME,
-//   api_key: process.env.CLOUDAPIKEY,
-//   api_secret: process.env.CLOUDINARYSECRET,
-//   secure: true
-// })
+// require("dotenv").config()
+// const cloudinary = require("cloudinary").v2
+// const fse = require("fs-extra")
+const cloudinaryConfig = cloudinary.config({
+  cloud_name: process.env.CLOUDNAME,
+  api_key: process.env.CLOUDAPIKEY,
+  api_secret: process.env.CLOUDINARYSECRET,
+  secure: true
+})
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -37,16 +37,16 @@ const db = mysql.createConnection({
 
 // app.use(passwordProtected)
 
-// app.get("/get-signature", (req, res) => {
-//   const timestamp = Math.round(new Date().getTime() / 1000)
-//   const signature = cloudinary.utils.api_sign_request(
-//     {
-//       timestamp: timestamp
-//     },
-//     cloudinaryConfig.api_secret
-//   )
-//   res.json({ timestamp, signature })
-// })
+app.get("/get-signature", (req, res) => {
+  const timestamp = Math.round(new Date().getTime() / 1000)
+  const signature = cloudinary.utils.api_sign_request(
+    {
+      timestamp: timestamp
+    },
+    cloudinaryConfig.api_secret
+  )
+  res.json({ timestamp, signature })
+})
 
 // app.post("/do-something-with-photo", async (req, res) => {
 //   // based on the public_id and the version that the (potentially malicious) user is submitting...
@@ -121,7 +121,7 @@ app.post("/addItem", (req, res) => {
   var desc = req.body.desc;
   var loc = req.body.location;
   var category = req.body.category;
-  var pic = req.body.picture;
+  // var pic = req.body.picture;
   var today = new Date();
 
   // Get the day of the month
@@ -161,9 +161,9 @@ app.post("/addItem", (req, res) => {
       loc +
       "', " +
       today +
-      ", " + 
+      ", 'https://res.cloudinary.com/dpgf5do9z/image/upload/" + 
       req.body.photoData.public_id
-      + ")";
+      + ".jpg')";
     db.query(q, (err, data) => {
       console.log(data);
       if (err) console.log(err);
@@ -190,6 +190,8 @@ app.post("/updateItem", (req, res) => {
     category +
     "', `location` = '" +
     loc +
+    "', `image` = '" +
+    pic +
     "' WHERE `iid` = " +
     iid;
   db.query(q, (err, data) => {

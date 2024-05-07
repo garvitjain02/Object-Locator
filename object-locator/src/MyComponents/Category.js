@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap';
-import { Form, Link, useLocation } from 'react-router-dom';
+import { Form, Button, Modal } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
 import Header from './Header';
 import LeftNav from './LeftNav';
-import img1 from "../images/img1.jpg";
+// import img1 from "../images/img1.jpg";
 
 const Category: FC<{}> = (props) => {
     const { state } = useLocation();
@@ -64,7 +64,7 @@ const Category: FC<{}> = (props) => {
         <div className="itemBlock">
           <Link to={"/Details"} state={item} style={{ color: "black" }}>
             <div className="itemImageLogo">
-              <img src={img1} alt="img" />
+              <img src={item.image} alt="img" />
             </div>
             <div className="itemDesc">
               <h3>{item.name}</h3>
